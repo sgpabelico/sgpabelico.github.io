@@ -1,90 +1,102 @@
-<html>
+<html lang="en">
 <head>
-	<style>
-		#main {color:navy;
-			font-family:"Georgia",Serif;
-			background-color:lightgrey;
-			text-align:center;}
 
-		.titles {color:navy;
-			font-family:"Georgia",Serif;
-			text-align:center;}
-		.subtitle {color:lightblue;
-			font-family:"Georgia",Serif;
-			text-align:left;}
+  <style>
+  .bg-1 {
+    background-color: #1abc9c; /* Green */
+    color: #ffffff;
+  }
+  .bg-2 {
+    background-color: #474e5d; /* Dark Blue */
+    color: #ffffff;
+  }
+  .bg-3 {
+    background-color: #ffffff; /* White */
+    color: #555555;
+  }
 
-		.normtext {color:black;
-		font-family:"Georgia",Serif;
-		text-align:left;}
+  .container-fluid {
+  padding-top: 70px;
+  padding-bottom: 70px;
+}
+.body {
+	font-family: "Lucida Console", monospace;
 
-		.nav {
-			list-style-type: none;
-			margin: 0;
-			padding: 0;
-			overflow: hidden;
-			text-align: center;
+}
 
-			}
+.navbar {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border: 0;
+  border-radius: 0;
+  margin-bottom: 0;
+  font-size: 12px;
+  letter-spacing: 5px;
+}
 
-		.nav li {
-			display:inline;
-			}
+.navbar-nav li a:hover {
+  color: #1abc9c !important;
+}
 
-		.nav a {
-			display: inline-block;
-			padding: 8px;
-			background-color:lightgrey;
-			text-align:center;
-			}
-	</style>
-	</head>
-<body>
+  </style>
+  <title>Sydney's Portfolio</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body class="body">
+<nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Sydney Pabelico</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/about.html">about</a></li>
+        <li><a href="/portfolio.html">portfolio</a></li>
+        <li><a href="/contact.html">contact</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
 
-<h1 id ='main'> About Me </h1>
+<div class="container-fluid bg-1 text-center">
+    <h3>Hi there - my name is Sydney Pabelico. I am a senior at CU Boulder studying Information Science with a minor in Political Science. I find great joy in coding, UI/UX and data analysis. I spend most of my free time reading (mostly Fantasy/Sci-Fi) and spending time with friends and family. On this page you will also find a more in depth look at my work experience and skills. If you have any questions please contact me <a href="sgpabelico.github.io/contact.html"> here</a>.</h3>
+  </div>
 
-<ul class = 'nav'>
-	<li class= "nav"><a href = "/home.html"> Home</a></li>
-	<li class= "nav"><a href = "/about.html"> About Me</a></li>
-	<li class= "nav"><a href = "/portfolio.html"> Portfolio</a></li>
-	<li class= "nav"><a href = "/contact.html"> Contact Me</a></li>
+ <div class="container-fluid bg-2 text-center">
+  <h3>Background</h3>
+  <p>I am an Air Force Brat turned Air Force Cadet. I grew up all over the continental United States and attribute my curiosity and wide range of interests to my chaotic childhood. I've always been interested in computers as both of my parents are computer engineers but I needed an outlet to express some creativity. I found a great balance of the two sides of my mind through the Information Science program at CU Boulder. I am able to learn the technical skills behind design while also getting the opportunity to actually choose designs and customize various projects.</p>
+</div>
 
-	</ul>
+ <div class="container-fluid bg-3 text-center">
+  <h3>Education</h3>
+  <p>In May of 2021 I will graduate from the Univesity of Colorado Boulder with a Bachelors of Science in Information Science and a minor in Political Science.</p>
+</div>
 
-<h2 class= 'titles'> Hi there - my name is Sydney Pabelico. I am a senior at CU Boulder studying Information Science with a minor in Political Science. I find great joy in coding, UI/UX and data analysis. I spend most of my free time reading (mostly Fantasy/Sci-Fi) and spending time with friends and family. On this page you will also find a more in depth look at my work experience and skills. If you have any questions please contact me <a href="sgpabelico.github.io/contact.html"> here</a>.</h2>
+<div class="container-fluid bg-1 text-center">
+    <h3>Work Experience</h3>
+    <ul>
+    <li> Senior Resident Advisor (2018-2021)</li>
+    <li> Continuing Education Student Technician (2018-2020)</li>
+    <li> Detachment 105 Cadet Wing Inspector General (2020-2021)</li>
+  </ul>
+  </div>
 
-<h2 class='subtitle'> Background</h2>
-
-<h3 class='normtext'> I am an Air Force Brat turned Air Force Cadet. I grew up all over the continental United States and attribute my curiosity and wide range of interests to my chaotic childhood. I've always been interested in computers as both of my parents are computer engineers but I needed an outlet to express some creativity. I found a great balance of the two sides of my mind through the Information Science program at CU Boulder. I am able to learn the technical skills behind design while also getting the opportunity to actually choose designs and customize various projects. </h3>
-
-<h2 class="subtitle"> Education </h2>
-
-<h3 class='normtext'> In May of 2021 I will graduate from the Univesity of Colorado Boulder with a Bachelors of Science in Information Science and a minor in Political Science.</h3>
-
-<h2 class="subtitle"> Work Experience </h2>
-
-<h3 class="normtext">
-	<ul>
-		<li> Senior Resident Advisor (2018-2021)</li>
-		<li> Continuing Education Student Technician (2018-2020)</li>
-		<li> Detachment 105 Cadet Wing Inspector General (2020-2021)</li>
-	</ul>
-	
-</h3>
-
-<h2 class='subtitle'> Skills</h2>
-
-<h3 class='normtext'> 
-	<ul>
-		<li> Python</li>
-		<li> JavaScript</li>
-		<li> HTML/CSS</li>
-		<li> Microsoft Office</li>
-	</ul>
-
-
-
-
-
-
-</body>
+  <div class="container-fluid bg-2 text-center">
+    <h3>Skills</h3>
+    <ul>
+    <li> Python</li>
+    <li> JavaScript</li>
+    <li> HTML/CSS</li>
+    <li> Microsoft Office</li>
+  </ul>
+  </div>
 </html>
