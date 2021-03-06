@@ -1,42 +1,81 @@
-<html>
+<html lang="en">
 <head>
-	<head>
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-	<link src="cover.css" rel="stylesheet",type="text/css">
-	</head>
-<body>
 
-<nav class="navbar navbar-light bg-light" style="color:black">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">
-      Sydney Pabelico
-    </a>
-    <ul class="nav justify-content-end">
-  <li class="nav-item">
-    <a class="nav-link active" aria-current="page" href="/home.html">Home</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="/portfolio.html">Portfolio</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="/about.html">About</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link " href="/contact.html">Contact</a>
-  </li>
-</ul>
+  <style>
+  .bg-1 {
+    background-color: #1abc9c; /* Green */
+    color: #ffffff;
+  }
+  .bg-2 {
+    background-color: #474e5d; /* Dark Blue */
+    color: #ffffff;
+  }
+  .bg-3 {
+    background-color: #ffffff; /* White */
+    color: #555555;
+  }
+
+  .container-fluid {
+  padding-top: 70px;
+  padding-bottom: 70px;
+}
+.body {
+	font-family: "Lucida Console", monospace;
+
+}
+
+.navbar {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border: 0;
+  border-radius: 0;
+  margin-bottom: 0;
+  font-size: 12px;
+  letter-spacing: 5px;
+}
+
+.navbar-nav li a:hover {
+  color: #1abc9c !important;
+}
+
+  </style>
+  <title>Sydney's Portfolio</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body class="body">
+<nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Sydney Pabelico</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/about.html">about</a></li>
+        <li><a href="/portfolio.html">portfolio</a></li>
+        <li><a href="/contact.html">contact</a></li>
+      </ul>
+    </div>
   </div>
 </nav>
 
+<div class="container-fluid bg-1 text-center">
+    <h3>Hi, I am <strong>Sydney</strong></h3>
+    <img src="IMG_1475.jpeg" class="img-circle" height=500px width=350px alt="picofme">
+    <h3>Nice to Meet You!</h3>
+  </div>
 
+ <div class="container-fluid bg-2 text-center">
+  <h3>I coded this website with the assistance of Bootstrap. It might look pretty plain now, but I'm hoping to spruce it up in the coming weeks!</h3>
+  <p>I hope you'll take a look around!</p>
+</div>
 
-<h1 id ='main'> Sydney Pabelico's Portfolio </h1>
-
-
-<h2 class= 'titles'> Welcome to the home page. This website details Sydney Pabelico's portfolio of work, who she is and how to get in contact with her. You can navigate to the following pages via the links down below. <strong>Happy exploring!</strong></h2>
-
-
-
-
-</body>
 </html>
