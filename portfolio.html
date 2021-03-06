@@ -1,62 +1,110 @@
-<html>
+<html lang="en">
 <head>
-	<style>
-		#main {color:navy;
-			font-family:"Georgia",Serif;
-			background-color:lightgrey;
-			text-align:center;}
 
-		.titles {color:navy;
-			font-family:"Georgia",Serif;
-			text-align:center;}
-		.subtitle {color:lightblue;
-			font-family:"Georgia",Serif;
-			text-align:left;}
+  <style>
+  .bg-1 {
+    background-color: #1abc9c; /* Green */
+    color: #ffffff;
+  }
+  .bg-2 {
+    background-color: #474e5d; /* Dark Blue */
+    color: #ffffff;
+  }
+  .bg-3 {
+    background-color: #ffffff; /* White */
+    color: #555555;
+  }
 
-		.normtext {color:black;
-		font-family:"Georgia",Serif;
-		text-align:left;}
+  .container-fluid {
+  padding-top: 70px;
+  padding-bottom: 70px;
+}
+.body {
+	font-family: "Lucida Console", monospace;
 
-		.nav {
-			list-style-type: none;
-			margin: 0;
-			padding: 0;
-			overflow: hidden;
-			text-align: center;
+}
 
-			}
+.navbar {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border: 0;
+  border-radius: 0;
+  margin-bottom: 0;
+  font-size: 12px;
+  letter-spacing: 5px;
+}
 
-		.nav li {
-			display:inline;
-			}
+.navbar-nav li a:hover {
+  color: #1abc9c !important;
+}
 
-		.nav a {
-			display: inline-block;
-			padding: 8px;
-			background-color:lightgrey;
-			text-align:center;
-			}
-	</style>
-	</head>
-<body>
+  </style>
+  <title>Sydney's Portfolio</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body class="body">
+<nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Sydney Pabelico</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/about.html">about</a></li>
+        <li><a href="/portfolio.html">portfolio</a></li>
+        <li><a href="/contact.html">contact</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
 
-<h1 id ='main'> Portfolio </h1>
 
-<ul class = 'nav'>
-	<li class= "nav"><a href = "/home.html"> Home</a></li>
-	<li class= "nav"><a href = "/about.html"> About Me</a></li>
-	<li class= "nav"><a href = "/portfolio.html"> Portfolio</a></li>
-	<li class= "nav"><a href = "/contact.html"> Contact Me</a></li>
+<div class="jumbotron">
+  <div class="container text-center">
+    <h1>My Portfolio</h1>      
+    <p>On this page you will find some links to projects I have worked on in the past. If you have any questions please contact me <a href="sgpabelico.github.io/contact.html"> here</a>.</p>
+  </div>
+</div>
+  
+<div class="container-fluid bg-1 text-center">    
+  <h3>Click the images to check out some of my projects.</h3><br>
+  <div class="row">
+    <div class="col-sm-3">
+      <p>Why Community is a criminally underated show and will remain that way.</p>
+      <a href="sgpabelico.github.io/wa4.html"><img alt=community src=
+       "https://www.slashgear.com/wp-content/uploads/2020/03/community_tv_show_main-1280x720.jpg" class="img-responsive" style="width:100%">
+    </div>
+    <div class="col-sm-3"> 
+     <p>A Study on the Music Listening Habits of College Students</p>
+      <a href="https://editor.p5js.org/sypa4062/present/E88mo_uac"><img alt=headphones src=
+       "https://i.pinimg.com/originals/6a/52/41/6a5241557e864a15994f03dc26662bfb.png" class="img-responsive" style="width:%50%">
+    </div>
+    <div class="col-sm-3"> 
+      <p>An Altered Version of MineSweeper coded by me in Java</p>
+      <a href="https://editor.p5js.org/sypa4062/present/al9VjtRlzl"><img alt=community src=
+       "https://banner2.cleanpng.com/20180602/cwo/kisspng-minesweeper-android-land-mine-video-game-minesweeper-5b1332f0b277f9.990249001527984880731.jpg" class="img-responsive" style="width:100%">
+    </div>
+    <div class="col-sm-3"> 
+      <p>I coded a webcam program (it will ask permission to use your computer's camera) in p5.js.</p>
+      <a href="https://editor.p5js.org/sypa4062/present/5eESae_8y"><img alt=community src=
+       "https://helpdeskgeek.com/wp-content/pictures/2020/07/webcam.png" class="img-responsive" style="width:100%">
 
-	</ul>
+    </div>
+  </div>
+</div><br>
 
-<h2 class= 'titles'> On this page you will find some links to projects I have worked on in the past. If you have any questions please contact me <a href="sgpabelico.github.io/contact.html"> here</a>.</h2>
 
-<ul class='subtitles'>
 
-	<li><a href='sgpabelico.github.io/wa4.html'>GitHub HTML/CSS Website</a></li>
-	<li><a href='https://editor.p5js.org/sypa4062/present/E88mo_uac'> Study on the Music Listening Habits of College Students</a></li>
-	<li><a href="https://editor.p5js.org/sypa4062/present/al9VjtRlz"> An altered version of MineSweeper coded completely by me in Java</a></li>
-	</ul>
+
+</div><br><br>
 </body>
 </html>
