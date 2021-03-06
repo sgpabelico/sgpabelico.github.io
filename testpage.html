@@ -68,31 +68,48 @@
   </div>
 </nav>
 
-<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img src="IMG_0024.jpeg" class="d-block w-100" alt="pic1">
-    </div>
-    <div class="carousel-item">
-      <img src="8EA10C2F-9DFB-4CEB-A637-560DB66268C1.jpeg" class="d-block w-100" alt="pic2">
-    </div>
-    <div class="carousel-item">
-      <img src="5774B4D2-B25B-4104-B407-8E95C58B0853.jpeg" class="d-block w-100" alt="pic3">
-    </div>
-  </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"  data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"  data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
+<div class="container-fluid bg-1 text-center">
+  <h1>A Little Bit About Me</h1>
 </div>
 
+<div id="carousel-example-generic" class="carousel slide">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+  </ol>
+
+    <!-- Wrapper for slides -->
+        <div class="carousel-inner">
+            <!-- Slide 1-->
+            <div class="item active">
+                <img src="IMG_0024.jpeg" alt="Slide 1" />
+            </div>
+
+            <!-- Slide 2-->
+              <div class="item">
+                  <img src="5774B4D2-B25B-4104-B407-8E95C58B0853.jpeg" alt="Slide 2" />
+              </div>
+
+          <!-- Slide 3-->
+            <div class="item">
+                <img src="8EA10C2F-9DFB-4CEB-A637-560DB66268C1.jpeg" alt="Slide 3" />
+            </div>
+          </div>
+
+
+  <!-- Controls -->
+  <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+    <span class="icon-prev"></span>
+  </a>
+  <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+    <span class="icon-next"></span>
+  </a>
+</div>
 <div class="container-fluid bg-1 text-center">
     <h3>Hi there - my name is Sydney Pabelico. I am a senior at CU Boulder studying Information Science with a minor in Political Science. I find great joy in coding, UI/UX and data analysis. I spend most of my free time reading (mostly Fantasy/Sci-Fi) and spending time with friends and family. On this page you will also find a more in depth look at my work experience and skills. If you have any questions please contact me <a href="sgpabelico.github.io/contact.html"> here</a>.</h3>
-  </div>
+</div>
 
  <div class="container-fluid bg-2 text-center">
   <h3>Background</h3>
@@ -111,7 +128,7 @@
     <li> Continuing Education Student Technician (2018-2020)</li>
     <li> Detachment 105 Cadet Wing Inspector General (2020-2021)</li>
   </ul>
-  </div>
+</div>
 
   <div class="container-fluid bg-2 text-center">
     <h3>Skills</h3>
@@ -122,4 +139,5 @@
     <li> Microsoft Office</li>
   </ul>
   </div>
+</body>
 </html>
