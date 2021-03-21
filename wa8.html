@@ -1,0 +1,21 @@
+<canvas id="myChart"></canvas>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+<body>
+<script type="text/javascript">
+
+$.getJSON("my_data.json",function(data)){
+
+
+	console.log("you got data")
+
+	var myBarChart = new Chart(ctx, {
+    type: 'bar',
+    data: data,
+});
+}
+
+</script>
+</body>
+
