@@ -1,46 +1,44 @@
 <head>
-	</head>
+</head>
 
 <canvas id="myChart"></canvas>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
 
   <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-<body>
+</head>
 <script type="text/javascript">
-var myChart;
-var data = {},
-myData = {}.
-labels = [];
 
-var jsonData = $.ajax({
-	url: 'my_data.json',
-	dataType: 'json',
-}).done(function(results)) {
-	myData = processData(results);
-	data= {
-		labels: myData.labels,
-		datasets: [{
-			label: "Denver Precinct",
-			fillColor "rgba(250,0,0)"
-			data: myData.data
-		}]
-	};
+$.getJSON("my_data.json", function(data){
 
-myChart = new Chart (ctx, {
-	type: 'bar',
-	data: data,
+    console.log("hey you got data")
+    console.log(data)
+
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var chart = new Chart(ctx, {
+        // The type of chart we want to create
+        type: 'line',
+
+        // The data for our dataset
+        data: {
+            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            datasets: [{
+                label: 'My New Dataset',
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                data: data
+            }]
+        },
+
+        // Configuration options go here
+        options: {
+
+        }
+    });
 
 })
-};
-
-
 </script>
-</body>
-
 
