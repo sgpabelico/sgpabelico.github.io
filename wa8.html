@@ -1,6 +1,6 @@
 <head>
 	</head>
-	
+
 <canvas id="myChart"></canvas>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 
@@ -8,10 +8,11 @@
 <body>
 <script type="text/javascript">
 
-$.getJSON("my_data.json",function(data)){
+$.getJSON("my_data.json",function(data){
 
 
 	console.log("you got data")
+	console.log(my_data)
 
 	var myBarChart = new Chart(ctx, {
     type: 'bar',
