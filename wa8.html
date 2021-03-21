@@ -1,5 +1,10 @@
+<html>
 <head>
 </head>
+<body>
+<h1>Code: Link to actual code <a href="/pabelico_wa_8.ipynb">here</a>
+</h1>
+<h2>In my code I wanted to look at the warnings_issued category across all the precincts in Denver. In order to do this, I filtered the data down to only include data where warnings_issued was True, meaning a warning was issued. After scanning the data the vast majority of these incidents were vehicular stops rather than any other type (i.e pedestrian). From there, I found the count of all warnings being issued across all precincts and the number was 732. In order to find out which district gave out the most warnings I created a dictionary that stored the district number as the key and the value was the count of how many times warnings were issued. Using this value and the total number of warnings, I was able to find the percentage of warnings for each district using simple divison. From here, I output my statistics as a json file.
 
 <canvas id="myChart"></canvas>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
@@ -43,3 +48,8 @@ $.getJSON("my_data.json", function(data){
 })
 </script>
 
+<h2>From my chart above, it looks like the district that gave out the most warnings was district 422 (here is a map of the districts for reference. <img src="https://www.denverdemocrats.org/sites/default/files/denver_maps/county/jpg/Streets-Precincts-2018.jpg" alt=map>). Taking a quick glance at the numbers, 6.2% of all warnings given out by Denver precincts were given out in 422. Taking a look at where this is located in Denver, it is located just north of Englewood and along Federal Blvd. Meaning this is a slightly more wealthy area as it is home to many different corporations. The district that gave the least amount of warnings overall was precinct 112. This precinct was responsible for less than 1 percent of warnings overall. It is located just south of Adams County and Southwest of Commerce City. Since this is a part of Denver that is always crawling with construction and all the chaos this entails, it would make sense that they are pretty leninant on warnings. I think it is interesting to see how different parts of town treat very similar things such as vehicular stops, with a seemingly wide range of regard. I think warnings are a tell tale sign of bias. Some people are blessed enough to get them while others don't and it can seem almost random. Or it could have something to do with how the police percieve the people they are "warning" or ticketing. It could be that those in precincts like 422 are more stable residents of the area, meaning they are there consistently, everyday because they work there rather than in 112, where construction/other workers are being changed out constantly. There could just be a lack of trust between the citizens and the police in those low scoring precincts. Overall, to look into this further I would look at other things that could have an effect on police perception of its' cities inhabitants. What is it that cops use to determine if someone gets a warning or a ticket? What is the defining line? I think it would be interesting to look into vehicular tickets and see if it has something to do with egregiousness of the offense, or if there is something human going on behind the scenes.
+	
+</h2>
+</body>
+</html>
