@@ -17,7 +17,6 @@ $.getJSON("my_data.json",function(data){
 
 	console.log("you got data")
 	console.log(data)
-	console.log(data[key])
 	var ctx = document.getElementById('myChart').getContext('2d');
 	var myBarChart = new Chart(ctx, {
     type: 'bar',
