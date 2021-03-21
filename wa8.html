@@ -17,6 +17,7 @@ $.getJSON("my_data.json",function(data){
 
 	console.log("you got data")
 	console.log(data)
+	console.log(data[key])
 	var ctx = document.getElementById('myChart').getContext('2d');
 	var myBarChart = new Chart(ctx, {
     type: 'bar',
@@ -26,7 +27,7 @@ $.getJSON("my_data.json",function(data){
                 label: 'Denver Precincts',
                 backgroundColor: 'rgb(255, 99, 132)',
                 borderColor: 'rgb(255, 99, 132)',
-                data: my_data
+                data: data
             }]
     }
 });
