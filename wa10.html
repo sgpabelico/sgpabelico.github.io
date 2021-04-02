@@ -8,7 +8,7 @@
 
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/reset.min.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/reveal.min.css">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/theme/sky.min.css" id="theme">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/theme/solarized.min.css" id="theme">
 
 		<!-- Theme used for syntax highlighted code -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/plugin/highlight/monokai.min.css" id="highlight-theme">
@@ -23,29 +23,12 @@
 				
 
 				<section>
-					<h3>Outline for today</h3>
-					<ul>
-						<li><a href="https://github.com/brianckeegan/brianckeegan.github.io/blob/master/week11.html">Week 11 code here</a> (<a href="https://brianckeegan.github.io/week11.html">slides</a>)</li>
-						<li>Weekly Assignment 10</li>
-						<li>Extending <a href="https://revealjs.com/">Reveal.js</a></li>
-						<ul>
-							<li>Animating code blocks</li>
-							<li>Vertical slides</li>
-						</ul>
-						<li>Daily participation</li>
-						<li>Hacking breakouts</li>
-						<ul>
-							<li>Slide numbers</li>
-							<li>Themes</li>
-							<li>Notes</li>
-							<li>Math</li>
-						</ul>
-						<li>Hacking share-outs</li>
-					</ul>
+					<h3>Why Backgrounds?</h3>
+					<p class="fragment fade-up">From an aesthetic stand point, adding a custom background can make the presentation more appealing while not necesarily making it seem cluttered. Instead of just adding images to a white slide, why not just make the whole background one picture?</p>
 				</section>
 
 				<!-- Start of a vertical slide -->
-				<section>
+				<!--<section>
 					<section>
 						<h3>Weekly Assignment 10</h3>
 						<p><b>Due Friday, April 2 by midnight</b></p>
@@ -86,40 +69,40 @@
 						</ul>
 					</section>
 				</section>
-				<!-- End of a vertical slide -->
+				 End of a vertical slide --> 
 
 
 				<section>
 
-					<h3>Extending Reveal.js</h3>
-					<ul>
-						<li>Animating code blocks</li>
-						<li>Vertical slides</li>
-						<li>Slide numbers</li>
-						<li>Themes</li>
-						<li>Notes</li>
-						<li>Math</li>
-					</ul>
+					<h3>What might a busy image covered slide look like?</h3>
+					<div class="r-stack">
+					<img class="fragment" src="https://cdn.vox-cdn.com/thumbor/uZJkqBgAr2sQCyaEr_TxTkN5p_U=/0x0:3800x2265/1200x800/filters:focal(1596x829:2204x1437)/cdn.vox-cdn.com/uploads/chorus_image/image/66504085/shutterstock_216617104.0.0.jpg">
+					<img class="fragment" src="https://thumbor.forbes.com/thumbor/fit-in/416x416/filters%3Aformat%28jpg%29/https%3A%2F%2Fi.forbesimg.com%2Fmedia%2Flists%2Fplaces%2Fboston-ma_416x416.jpg">
+					<img class="fragment" src="https://thumbs.dreamstime.com/b/boston-text-united-states-postcard-style-sign-city-name-word-78367699.jpg">
+					<h2 class="r-fit-text fragment">See? No Fun</h2>
+					</div>
 				</section>
 
 				<!-- Vertical slides for each topic -->
 				<section>
-					<section>
-						<h3>Animating code blocks</h3>
-						<p>How do we add <a href="https://revealjs.com/code/">animations</a> to code blocks?</p>
-						<p>(Easy)</p>
+					<section data-background-image="http://s3.amazonaws.com/signatureboston/homepage/Boston_Charles_River_Zoom_Background.png">
+						<h3 style="color:white">So how do I go from that to this?</h3>
+						<p style="color:white"> Click down to find out!</p>
 					</section>	
 
 					<section>
-						<h3>Animating code blocks</h3>
-						<pre><code data-trim data-line-numbers=1,5|2-4|2|3|4><script type="text/template">
-							<pre><code data-trim data-line-numbers=1,5|2-4|2|3|4>
-								def addition(a,b):
-							          sum = a + b
-						           return sum
-						    </code></pre>
+						<h3>How to add an image as a background</h3>
+						<pre><code data-trim data-line-numbers=1|2><script type="text/template">
+							<section data-background-image="img url">
+							<h3 style="color:white">Make sure the text color is visible."</h3>
 							</script></pre></code>
 						</code></pre>
+					</section>
+
+					<section>
+						<iframe height="100%" width="100%" src="https://www.youtube.com/watch?v=suw63h_LQbU"></iframe>
+						<h3>What if I want my background to be a video?</h3>
+
 					</section>
 
 				</section>
