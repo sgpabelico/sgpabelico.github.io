@@ -1,0 +1,569 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Week 13 Slides</title>
+
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/reset.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/reveal.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/theme/moon.min.css" id="theme">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/plugin/highlight/monokai.min.css" id="highlight-theme">
+
+		<!-- Loading Vega-->
+		<script src="https://cdn.jsdelivr.net/npm/vega@5.19.1"></script>
+		<script src="https://cdn.jsdelivr.net/npm/vega-lite@5.0.0"></script>
+		<script src="https://cdn.jsdelivr.net/npm/vega-embed@6.15.1"></script>
+
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h3>INFO 3402: Information Exposition</h3>
+					<p style="color:#CFB87C; font-weight:bold;">Brian Keegan & Abram Handler</p>
+					<p style="color:#565A5C">Week 13: April 5 - 9 2021</p>
+				</section>
+				
+
+				<section>
+					<h3>Outline for Monday, April 5</h3>
+					<ul>
+						<li>Week 11 and 12 slides <a href="https://github.com/cuinfoscience/INFO3402-Spring2021">code here</a></li>
+						<ul>
+							<li><a href="https://cuinfoscience.github.io/INFO3402-Spring2021/Week%2011/week11.html">Week 11 slides</a></li>
+							<li><a href="https://cuinfoscience.github.io/INFO3402-Spring2021/Week%2012/week12.html">Week 12 slides</a></li>
+						</ul>
+						<li><a href="https://vega.github.io/">Vega</a> + <a href="https://altair-viz.github.io/index.html">Altair</a></li>
+						<ul>
+							<li>Installation</li>
+							<li>Basic example</li>
+							<li>Exporting to web</li>
+						</ul>
+						<li>Weekly Assignment 11</li>
+						<ul>
+							<li>Due Friday, April 9 by midnight</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section>
+					<section>
+						<h3>Visualization grammars</h3>
+						<p>Visualizations are a combination of components</p>
+						<p>Matplotlib's <a href="https://matplotlib.org/stable/gallery/showcase/anatomy.html">anatomy of a figure</a></p>
+						<img src="https://matplotlib.org/stable/_images/sphx_glr_anatomy_001.png" height="300">
+					</section>
+
+					<section>
+						<h3>Visualization defaults</h3>
+						<p>When we call a <code>.plot()</code> method in Python, lots of default design decisions are already made</p>
+						<p>These defaults work most of the time, but there are many cases where we want to customize or capture more complexity</p>
+					</section>
+
+					<section>
+						<h3>Grammar of graphics</h3>
+						<p>A "<a href="https://www.springer.com/in/book/9780387245447">grammar of graphics</a>" describes a visualization in a highly structured way</p>
+						<p>"Grammar of graphics" found explicitly in packages like <code><a href="https://ggplot2.tidyverse.org/">ggplot2</a></code> in R</p>
+					</section>
+
+					<section>
+						<h3>Visualization grammars</h3>
+						<p>Something seemingly simple like a barplot has x and y axes, marks, labels, and colors</p>
+
+						<div id="vis01"></div>
+						<script type="text/javascript">
+						var spec = {
+						  "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+						  "config": {
+						    "view": {
+						      "continuousHeight": 300,
+						      "continuousWidth": 400
+						    }
+						  },
+						"data": {
+						"values": [
+						  {"a": "C", "b": 2}, {"a": "C", "b": 7}, {"a": "C", "b": 4},
+						  {"a": "D", "b": 1}, {"a": "D", "b": 2}, {"a": "D", "b": 6},
+						  {"a": "E", "b": 8}, {"a": "E", "b": 4}, {"a": "E", "b": 7}
+						]
+						},
+						"hconcat":[{
+								"mark": "bar",
+								"encoding": {
+								"x": {"field": "a", "type": "nominal"},
+								"y": {"aggregate": "average", "field": "b", "type": "quantitative"}
+								}
+							},
+							{"mark": "bar",
+								"encoding": {
+								"x": {"aggregate": "average", "field": "b", "type": "quantitative"},
+								"y": {"field": "a", "type": "nominal"},
+								}
+							},
+							{"mark": "point",
+								"encoding": {
+								"x": {"field": "a", "type": "nominal"},
+								"y": {"field": "b", "type": "quantitative"}
+								}
+							}
+						]
+						}	
+						var opt = {"renderer": "canvas", "actions": false};
+						vegaEmbed("#vis01", spec, opt);
+						</script>
+					</section>
+
+					<section>
+						<h3>Visualization grammars</h3>
+						The mappings to produce a statistical graphic from a set of data (<a href="https://link.springer.com/chapter/10.1007/978-3-642-21551-3_13">Wilkinson 2012</a>):
+						<ul>
+							<li>Variables: data in columns or fields</li>
+							<li>Algebra: operations to convert data shape</li>
+							<li>Scales: choose or transform into units</li>
+							<li>Statistics: operations to convert data values</li>
+							<li>Geometry: visual representation of data</li>
+							<li>Coordinates: default Cartesian or more advanced</li>
+							<li>Aesthetics: position, size, shape, color, <i>etc</i>.</li>
+						</ul>
+					</section>
+
+				</section>
+
+				<section>
+					<section>
+						<h3>Vega</h3>
+						<p><a href="https://vega.github.io/vega/">Vega</a> is a "grammar" for creating and sharing interactive visualizations</p>
+						<p>It allows you to load, transform, and represent data with a JavaScript document defining the elements of your visualization</p>
+					</section>
+
+					<section>
+						<h3>Vega</h3>
+						<p>Example</p>
+						<div id="vis02"></div>
+						<script type="text/javascript">
+						var spec = {
+						  "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+						  "config": {
+						    "view": {
+						      "continuousHeight": 300,
+						      "continuousWidth": 400
+						    }
+						  },
+						  "data": {
+						    "url": "https://vega.github.io/vega-datasets/data/cars.json"
+						  },
+						  "encoding": {
+						    "color": {
+						      "field": "Origin",
+						      "type": "nominal"
+						    },
+						    "x": {
+						      "field": "Horsepower",
+						      "type": "quantitative"
+						    },
+						    "y": {
+						      "field": "Miles_per_Gallon",
+						      "type": "quantitative"
+						    }
+						  },
+						  "mark": "point"
+						};
+						var opt = {"renderer": "canvas", "actions": false};
+						vegaEmbed("#vis02", spec, opt);
+						</script>
+					</section>
+
+					<section>
+						<h3>Vega Example Breakdown</h3>
+						<p><a href="https://vega.github.io/vega-lite/docs/spec.html">Configuring view</a></p>
+						<pre><code data-trim class='js' data-line-numbers=1|2|3|4|5-6>
+							var spec = {
+							"$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+							"config": {
+								"view": {
+									"continuousHeight": 300,
+									"continuousWidth": 400
+						    		}
+						  	},
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>Vega Example Breakdown</h3>
+						<p><a href="https://vega.github.io/vega-lite/docs/data.html">Importing data</a></p>
+						<pre><code data-trim class='js' data-line-numbers=2>
+							"data": {
+						    "url": "https://vega.github.io/vega-datasets/data/cars.json"
+						  },
+						</code></pre>
+						<p>It could be helpful to look at the <a href="https://vega.github.io/vega-datasets/data/cars.json">data itself</a></p>
+					</section>
+
+					<section>
+						<h3>Vega Example Breakdown</h3>
+						<p><a href="https://vega.github.io/vega-lite/docs/encoding.html">Data encoding</a></p>
+						<p>There are two "position" channels <code>x</code> and <code>y</code> and a "mark property" channel <code>color</code></p>
+						<pre><code data-trim class='js' data-line-numbers=2-5|6-9|10-12>
+							"encoding": {
+						    "color": {
+						      "field": "Origin",
+						      "type": "nominal"
+						      },
+						    "x": {
+						      "field": "Horsepower",
+						      "type": "quantitative"
+						      },
+						    "y": {
+						      "field": "Miles_per_Gallon",
+						      "type": "quantitative"
+							  }
+							},
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>Vega Example Breakdown</h3>
+						<p><a href="https://vega.github.io/vega-lite/docs/mark.html#types">Mark type</a> defines the basic shape/type of visualization</p>
+						<pre><code data-trim class='js' data-line-numbers>
+							"mark": "point"
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>Vega example</h3>
+						<p>We <i>could</i> define our visualizations purely through a Vega specification document like this</p>
+						<p>Check out the <a href="https://vega.github.io/vega-lite/examples/">example gallery</a></p>
+						<p>But most of us are more comfortable in Python, so let's explore how to make Vega visualizations there</p>
+					</section>
+
+				</section>
+
+				<section>
+					<section>
+						<h3>Altair</h3>
+						<p>"Altair’s main purpose is to convert plot specifications to a JSON string that conforms to Vega"</p>
+						<p>Altair lets us do Vega in Python!</p>
+						<p>Altair plots can stay in our notebooks, but we can also easily move them to the web</p>
+					</section>
+					
+					<section>
+						<h3>Altair: Installation</h3>
+						<p><a href="https://altair-viz.github.io/getting_started/installation.html">Installation</a></p>
+						<pre><code data-trim class='sh'>
+							conda install -c conda-forge altair vega_datasets
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>Altair: Components</h3>
+						<p>A <a href="https://altair-viz.github.io/getting_started/starting.html">statistical visualization</a> in Altair has:</p>
+						<ul>
+							<li>Data: a JSON or tabular data structure</li>
+							<li>Chart: a object wrapped around the data</li>
+							<li>Marks: the "type" of visualization</li>
+							<li>Encoding: mapping dimensions to data variables</li>
+							<li>Transformation: converting data</li>
+						</ul>
+					</section>
+
+				</section>
+
+				<section>
+					<section>
+						<h3>Example: Data</h3>
+						<p>Adapted from the <a href="https://altair-viz.github.io/getting_started/starting.html">documentation</a></p>
+						<pre><code data-trim class="python" data-line-numbers=1|2,5|3|4>
+							import pandas as pd
+							data = pd.DataFrame({
+								'a': list('CCCDDDEEE'),
+								'b': [2, 7, 4, 1, 2, 6, 8, 4, 7]
+								})
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>Example: Chart</h3>
+
+						<pre><code data-trim class="python" data-line-numbers=1|2>
+							import altair as alt
+							chart = alt.Chart(data)
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>Example: Marks</h3>
+						<pre><code data-trim class="python" data-line-numbers>
+							alt.Chart(data).mark_point()
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>Example: Encodings</h3>
+						<pre><code data-trim class="python" data-line-numbers>
+							alt.Chart(data).mark_point().encode(
+								x='a',
+							)
+						</code></pre>
+						<p>versus</p>
+						<pre><code data-trim class="python" data-line-numbers>
+							alt.Chart(data).mark_point().encode(
+								x='a',
+								y='b'
+							)
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>Example: Transformation</h3>
+						<p>Aggregating values with <code>average</code></p>
+
+						<pre><code data-trim class="python" data-line-numbers>
+							alt.Chart(data).mark_point().encode(
+								x='a',
+								y='average(b)'
+							)
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>Example: Examine JSON output</h3>
+						<pre><code data-trim class="python" data-line-numbers>
+							chart = alt.Chart(data).mark_point().encode(
+								x='a',
+								y='average(b)'
+							)
+							print(chart.to_json())
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>Example: Publishing</h3>
+
+						<pre><code data-trim class="python" data-line-numbers>
+							chart = alt.Chart(data).mark_point().encode(
+								x='a',
+								y='average(b)'
+							)
+							chart.save('chart.html')
+						</code></pre>
+					</section>
+
+				</section>
+
+				<section>
+					<section>
+						<h3>Publishing</h3>
+						<p>A minimal HTML file generated by Altair:</p>
+						<pre><code class="html" data-trim data-line-numbers=1,2,16|3-7|4-6|8-15|11|12|9,13><script type="text/template">
+							<!DOCTYPE html>
+							<html>
+							<head>
+								<script src="https://cdn.jsdelivr.net/npm/vega@3">< /script>
+								<script src="https://cdn.jsdelivr.net/npm/vega-lite@2">< /script>
+								<script src="https://cdn.jsdelivr.net/npm/vega-embed@3">< /script>
+							</head>
+							<body>
+								<div id="vis"></div>
+								<script type="text/javascript">
+									var spec = {};  /* JSON dump of your chart's spec */
+									var opt = {"renderer": "canvas", "actions": false};  /* Options for the embedding */
+									vegaEmbed("#vis", spec, opt);
+								< /script>
+							</body>
+							</html>
+						</script></code></pre>
+						<p><a href="#/10/3">Link back to Wednesday in-class exercises</a></p>
+					</section>
+
+					<section>
+						<h3>Publishing into another page</h3>
+						<p>The HTML file for the chart doesn't have to stand alone</p>
+						<p>The <code>script</code> and <code>div</code> tags generated by Altair/Vega can be integrated with a pre-existing web-page</p>
+						<p>Make sure to include the JavaScript <code>spec</code> specifying the data, marks, encodings, and transformations</p>
+					</section>
+
+				</section>
+
+				<section>
+					<h3>Outline for Wednesday, April 7</h3>
+					<ul>
+						<li>Review</li>
+						<ul>
+							<li>Grammar of graphics</li>
+							<li><a href="https://vega.github.io/">Vega</a>/<a href="https://altair-viz.github.io/index.html">Altair</a></li>
+						</ul>
+						<li>Weekly Assignment 11</li>
+						<ul>
+							<li>Use <code>vega_datasets</code>, make a Vega visualization, and embed in a Reveal.js deck</li>
+							<li>Due Friday, April 9 by midnight</li>
+						</ul>
+						<li>In-class exercises</li>
+						<ul>
+							<li>Add a Vega chart to a web page</li>
+							<li>Add a Vega chart to a Reveal.js page</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section>
+					<section>
+						<h3>Review: Grammar of graphics</h3>
+						<ul>
+							<li>Most plots bake in lots of design defaults</li>
+							<li>GoG asks us to make these decisions explicit</li>
+							<li>Data, marks, encodings, aesthetics</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Review: Vega + Altair</h3>
+						<ul>
+							<li><a href="https://vega.github.io/">Vega</a> is a JavaScript GoG implementation</li>
+							<li><a href="https://altair-viz.github.io/index.html">Altair</a> is a Python library for writing Vega</li>
+							<li>Check out <a href="https://vega.github.io/vega-lite/examples/">examples</a> for inspiration</li>
+							<li><code><a href="https://github.com/vega/vega-datasets">vega_datasets</a></code> has fun data</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Review: Exporting to web</h3>
+						<ul>
+							<li>The chart HTML file doesn't have to stand alone</li>
+							<li>Integrate <code>script</code> and <code>div</code> tags generated by Altair/Vega into a pre-existing web-page</li>
+							<li>Make sure to include the JavaScript <code>spec</code> specifying the data, marks, encodings, and transformations</li>
+						</ul>
+					</section>
+
+				</section>
+
+				
+				<section>
+					<h3>Weekly Assignment 11</h3>
+					<p><b>Due Friday, April 9 by midnight</b></p>
+					<p>Use an existing dataset within the <code><a href="https://vega.github.io/vega-datasets/">vega_datasets</a></code></p>
+					<p>Make a Reveal.js deck with at least two Altair/Vega visualizations</p>
+					<p>Include some tutorial-style documentation how you implemented Vega encodings and marks as code blocks</p>
+					<p>Interpret the results of the visualization</p>
+				</section>
+
+				<section>
+					<section>
+						<h3>In-Class Exercises</h3>
+						<p>Each exercise has a basic template file</p>
+						<p>Update the template file to use this Vega spec</p>
+						<p>Upload whichever HTML file to <a href="https://canvas.colorado.edu/courses/70121/assignments/1025586">Canvas daily assignment</a></p>
+						<h3>You don't need Altair installed to do this!</h3>
+					</section>
+
+					<section>
+						<h3>In-Class Exercises</h3>
+						<p>Use the Vega spec document below</p>
+						<pre><code data-trim data-line-numbers class="js">
+							{
+							  "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+							  "config": {
+							    "view": {
+							      "continuousHeight": 300,
+							      "continuousWidth": 400
+							    }
+							  },
+							  "data": {
+							    "url": "https://vega.github.io/vega-datasets/data/cars.json"
+							  },
+							  "encoding": {
+							    "color": {
+							      "field": "Origin",
+							      "type": "nominal"
+							    },
+							    "x": {
+							      "field": "Horsepower",
+							      "type": "quantitative"
+							    },
+							    "y": {
+							      "field": "Miles_per_Gallon",
+							      "type": "quantitative"
+							    }
+							  },
+							  "mark": "point"
+							};
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>In-Class Exercises</h3>
+						<p>Upload at least one of your files to Canvas</p>
+						<p><a href="https://canvas.colorado.edu/courses/70121/assignments/1025586">"Apr 7 : in-class"</a></p>
+						<p>Simple binary participation</p>
+					</section>
+
+					<section>
+						<h3>Exercise 1: Add a simple chart to a web page</h3>
+						<ol>
+							<li>Download/copy the template file from <a href="https://github.com/cuinfoscience/INFO3402-Spring2021/blob/main/Week13/html_template.html">GitHub</a> or <a href="https://canvas.colorado.edu/files/31244623/download?download_frd=1">Canvas</a></li>
+							<li>Open in text editor</li>
+							<li>Add the tags to import Vega (<a href="#/6/0/0">Slide 6</a>)</li>
+							<li>Add the Vega spec document (<a href="#/10/1">Slide 10/1</a>)</li>
+							<li>Test to make sure the visualization appears</li>
+						</ol>
+					</section>
+
+					<section>
+						<h3>Exercise 2: Add a simple chart to Reveal.js</h3>
+						<ol>
+							<li>Download/copy the template file from <a href="https://github.com/cuinfoscience/INFO3402-Spring2021/blob/main/Week13/reveal_template.html">GitHub</a> or <a href="https://canvas.colorado.edu/files/31244625/download?download_frd=1">Canvas</a></li>
+							<li>Open in text editor</li>
+							<li>Add the tags to import Vega (<a href="#/6/0/0">Slide 6</a>)</li>
+							<li>Add the Vega spec document (<a href="#/10/1">Slide 10/1</a>)</li>
+							<li>Test to make sure the visualization appears</li>
+						</ol>
+					</section>
+
+					<section>
+						<h3>Exercise solutions</h3>
+						<p>HTML exercise completed <a href="https://github.com/cuinfoscience/INFO3402-Spring2021/blob/main/Week13/html_template_completed.html">here</a></p>
+						<p>Reveal.js exercise completed <a href="https://github.com/cuinfoscience/INFO3402-Spring2021/blob/main/Week13/reveal_template_completed.html">here</a></p>
+					</section>
+
+				</section>
+
+				<section>
+					<h3>Friday's class</h3>
+					<p>Show and tell and debugging works-in-progress</p>
+				</section>
+
+				<section>
+					<h3>Outline for Friday, April 9</h3>
+					<ul>
+						<li>Weekly Assignment 11</li>
+						<ul>
+							<li>Use <code>vega_datasets</code>, make a Vega visualization, and embed in a Reveal.js deck</li>
+							<li>Due Friday, April 9 by midnight</li>
+						</ul>
+						<li>Showcase submitted or in-progress assignments</li>
+						<li>Answer questions about implementations</li>
+						</ul>
+					</ul>
+				</section>
+
+			</div>
+		</div>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/reveal.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/plugin/highlight/highlight.min.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				slideNumber: 'h/v',
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealHighlight ]
+			});
+		</script>
+	</body>
+</html>
