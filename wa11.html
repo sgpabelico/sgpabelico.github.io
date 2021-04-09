@@ -17,6 +17,7 @@
 		<script src="https://cdn.jsdelivr.net/npm/vega@5.19.1"></script>
 		<script src="https://cdn.jsdelivr.net/npm/vega-lite@5.0.0"></script>
 		<script src="https://cdn.jsdelivr.net/npm/vega-embed@6.15.1"></script>
+		<script src="https://cdn.jsdelivr.net/npm/vega/build/vega.min.js.map"></script>
 
 	</head>
 	<body>
@@ -236,73 +237,174 @@
 
 <section>
 	<section>
-		<h3>Visualization #3</h3>
+		<h3>Visualization #2</h3>
 		<div id="vi1"></div>
 	<script type="text/javascript">
 		var spec = {
   "$schema": "https://vega.github.io/schema/vega/v5.json",
-  "description": "A choropleth map depicting U.S. unemployment rates by county in 2009.",
-  "width": 960,
-  "height": 500,
-  "autosize": "none",
+  "description": "A population pyramid showing U.S. demographics from 1850 to 2000.",
+  "height": 400,
+  "padding": 5,
+
+  "signals": [
+    { "name": "chartWidth", "value": 300 },
+    { "name": "chartPad", "value": 20 },
+    { "name": "width", "update": "2 * chartWidth + chartPad" },
+    { "name": "year", "value": 2000,
+      "bind": {"input": "range", "min": 1850, "max": 2000, "step": 10} }
+  ],
 
   "data": [
     {
-      "name": "unemp",
-      "url": "data/unemployment.tsv",
-      "format": {"type": "tsv", "parse": "auto"}
+      "name": "population",
+      "url": "data/population.json"
     },
     {
-      "name": "counties",
-      "url": "data/us-10m.json",
-      "format": {"type": "topojson", "feature": "counties"},
+      "name": "popYear",
+      "source": "population",
       "transform": [
-        { "type": "lookup", "from": "unemp", "key": "id", "fields": ["id"], "values": ["rate"] },
-        { "type": "filter", "expr": "datum.rate != null" }
+        {"type": "filter", "expr": "datum.year == year"}
       ]
-    }
-  ],
-
-  "projections": [
+    },
     {
-      "name": "projection",
-      "type": "albersUsa"
+      "name": "males",
+      "source": "popYear",
+      "transform": [
+        {"type": "filter", "expr": "datum.sex == 1"}
+      ]
+    },
+    {
+      "name": "females",
+      "source": "popYear",
+      "transform": [
+        {"type": "filter", "expr": "datum.sex == 2"}
+      ]
+    },
+    {
+      "name": "ageGroups",
+      "source": "population",
+      "transform": [
+        { "type": "aggregate", "groupby": ["age"] }
+      ]
     }
   ],
 
   "scales": [
     {
-      "name": "color",
-      "type": "quantize",
-      "domain": [0, 0.15],
-      "range": {"scheme": "blues", "count": 7}
-    }
-  ],
-
-  "legends": [
+      "name": "y",
+      "type": "band",
+      "range": [{"signal": "height"}, 0],
+      "round": true,
+      "domain": {"data": "ageGroups", "field": "age"}
+    },
     {
-      "fill": "color",
-      "orient": "bottom-right",
-      "title": "Unemployment",
-      "format": "0.1%"
+      "name": "c",
+      "type": "ordinal",
+      "domain": [1, 2],
+      "range": ["#d5855a", "#6c4e97"]
     }
   ],
 
   "marks": [
     {
-      "type": "shape",
-      "from": {"data": "counties"},
+      "type": "text",
+      "interactive": false,
+      "from": {"data": "ageGroups"},
       "encode": {
-        "enter": { "tooltip": {"signal": "format(datum.rate, '0.1%')"}},
-        "update": { "fill": {"scale": "color", "field": "rate"} },
-        "hover": { "fill": {"value": "red"} }
+        "enter": {
+          "x": {"signal": "chartWidth + chartPad / 2"},
+          "y": {"scale": "y", "field": "age", "band": 0.5},
+          "text": {"field": "age"},
+          "baseline": {"value": "middle"},
+          "align": {"value": "center"},
+          "fill": {"value": "#000"}
+        }
+      }
+    },
+    {
+      "type": "group",
+
+      "encode": {
+        "update": {
+          "x": {"value": 0},
+          "height": {"signal": "height"}
+        }
       },
-      "transform": [
-        { "type": "geoshape", "projection": "projection" }
+
+      "scales": [
+        {
+          "name": "x",
+          "type": "linear",
+          "range": [{"signal": "chartWidth"}, 0],
+          "nice": true, "zero": true,
+          "domain": {"data": "population", "field": "people"}
+        }
+      ],
+
+      "axes": [
+        {"orient": "bottom", "scale": "x", "format": "s", "title": "Females"}
+      ],
+
+      "marks": [
+        {
+          "type": "rect",
+          "from": {"data": "females"},
+          "encode": {
+            "enter": {
+              "x": {"scale": "x", "field": "people"},
+              "x2": {"scale": "x", "value": 0},
+              "y": {"scale": "y", "field": "age"},
+              "height": {"scale": "y", "band": 1, "offset": -1},
+              "fillOpacity": {"value": 0.6},
+              "fill": {"scale": "c", "field": "sex"}
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "group",
+
+      "encode": {
+        "update": {
+          "x": {"signal": "chartWidth + chartPad"},
+          "height": {"signal": "height"}
+        }
+      },
+
+      "scales": [
+        {
+          "name": "x",
+          "type": "linear",
+          "range": [0, {"signal": "chartWidth"}],
+          "nice": true, "zero": true,
+          "domain": {"data": "population", "field": "people"}
+        }
+      ],
+
+      "axes": [
+        {"orient": "bottom", "scale": "x", "format": "s", "title": "Males"}
+      ],
+
+      "marks": [
+        {
+          "type": "rect",
+          "from": {"data": "males"},
+          "encode": {
+            "enter": {
+              "x": {"scale": "x", "field": "people"},
+              "x2": {"scale": "x", "value": 0},
+              "y": {"scale": "y", "field": "age"},
+              "height": {"scale": "y", "band": 1, "offset": -1},
+              "fillOpacity": {"value": 0.6},
+              "fill": {"scale": "c", "field": "sex"}
+            }
+          }
+        }
       ]
     }
   ]
-};  /* JSON dump of your chart's spec */
+}  /* JSON dump of your chart's spec */
 		var opt = {"renderer": "canvas", "actions": false};  /* Options for the embedding */
 		vegaEmbed("#vi1", spec, opt);
 	</script>
