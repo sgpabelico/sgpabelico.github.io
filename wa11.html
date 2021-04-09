@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>Week 13 Slides</title>
+		<title>Weekly Assignment 11</title>
 
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/reset.min.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/reveal.min.css">
@@ -26,191 +26,289 @@
 					<h3>Weekly Assignment 11</h3>
 					<p style="color:#CFB87C; font-weight:bold;">Sydney Pabelico</p>
 				</section>
-
+<section>
 				<section>
 					<h3>Visualization #1</h3>
 					<div id="vis"></div>
 	<script type="text/javascript">
 		var spec = {
   "$schema": "https://vega.github.io/schema/vega/v5.json",
-  "description": "A searchable, stacked area chart of U.S. occupations from 1850 to 2000.",
-  "width": 800,
-  "height": 500,
+  "description": "A basic area chart example.",
+  "width": 500,
+  "height": 200,
   "padding": 5,
 
   "signals": [
     {
-      "name": "sex", "value": "all",
-      "bind": {"input": "radio", "options": ["men", "women", "all"]}
-    },
-    {
-      "name": "query", "value": "",
-      "on": [
-        {"events": "area:click!", "update": "datum.job"},
-        {"events": "dblclick!", "update": "''"}
-      ],
-      "bind": {"input": "text", "placeholder": "search", "autocomplete": "off"}
+      "name": "interpolate",
+      "value": "monotone",
+      "bind": {
+        "input": "select",
+        "options": [
+          "basis",
+          "cardinal",
+          "catmull-rom",
+          "linear",
+          "monotone",
+          "natural",
+          "step",
+          "step-after",
+          "step-before"
+        ]
+      }
     }
   ],
 
   "data": [
     {
-      "name": "jobs",
-      "url": "data/jobs.json",
-      "transform": [
-        {
-          "type": "filter",
-          "expr": "(sex === 'all' || datum.sex === sex) && (!query || test(regexp(query,'i'), datum.job))"
-        },
-        {
-          "type": "stack",
-          "field": "perc",
-          "groupby": ["year"],
-          "sort": {
-            "field": ["job", "sex"],
-            "order": ["descending", "descending"]
-          }
-        }
-      ]
-    },
-    {
-      "name": "series",
-      "source": "jobs",
-      "transform": [
-        {
-          "type": "aggregate",
-          "groupby": ["job", "sex"],
-          "fields": ["perc", "perc"],
-          "ops": ["sum", "argmax"],
-          "as": ["sum", "argmax"]
-        }
+      "name": "table",
+      "values": [
+        {"u": 1,  "v": 28}, {"u": 2,  "v": 55},
+        {"u": 3,  "v": 43}, {"u": 4,  "v": 91},
+        {"u": 5,  "v": 81}, {"u": 6,  "v": 53},
+        {"u": 7,  "v": 19}, {"u": 8,  "v": 87},
+        {"u": 9,  "v": 52}, {"u": 10, "v": 48},
+        {"u": 11, "v": 24}, {"u": 12, "v": 49},
+        {"u": 13, "v": 87}, {"u": 14, "v": 66},
+        {"u": 15, "v": 17}, {"u": 16, "v": 27},
+        {"u": 17, "v": 68}, {"u": 18, "v": 16},
+        {"u": 19, "v": 49}, {"u": 20, "v": 15}
       ]
     }
   ],
 
   "scales": [
     {
-      "name": "x",
+      "name": "xscale",
       "type": "linear",
       "range": "width",
-      "zero": false, "round": true,
-      "domain": {"data": "jobs", "field": "year"}
+      "zero": false,
+      "domain": {"data": "table", "field": "u"}
     },
     {
-      "name": "y",
+      "name": "yscale",
       "type": "linear",
-      "range": "height", "round": true, "zero": true,
-      "domain": {"data": "jobs", "field": "y1"}
-    },
-    {
-      "name": "color",
-      "type": "ordinal",
-      "domain": ["men", "women"],
-      "range": ["#33f", "#f33"]
-    },
-    {
-      "name": "alpha",
-      "type": "linear", "zero": true,
-      "domain": {"data": "series", "field": "sum"},
-      "range": [0.4, 0.8]
-    },
-    {
-      "name": "font",
-      "type": "sqrt",
-      "range": [0, 20], "round": true, "zero": true,
-      "domain": {"data": "series", "field": "argmax.perc"}
-    },
-    {
-      "name": "opacity",
-      "type": "quantile",
-      "range": [0, 0, 0, 0, 0, 0.1, 0.2, 0.4, 0.7, 1.0],
-      "domain": {"data": "series", "field": "argmax.perc"}
-    },
-    {
-      "name": "align",
-      "type": "quantize",
-      "range": ["left", "center", "right"], "zero": false,
-      "domain": [1730, 2130]
-    },
-    {
-      "name": "offset",
-      "type": "quantize",
-      "range": [6, 0, -6], "zero": false,
-      "domain": [1730, 2130]
+      "range": "height",
+      "nice": true,
+      "zero": true,
+      "domain": {"data": "table", "field": "v"}
     }
   ],
 
   "axes": [
+    {"orient": "bottom", "scale": "xscale", "tickCount": 20},
+    {"orient": "left", "scale": "yscale"}
+  ],
+
+  "marks": [
     {
-      "orient": "bottom", "scale": "x", "format": "d", "tickCount": 15
+      "type": "area",
+      "from": {"data": "table"},
+      "encode": {
+        "enter": {
+          "x": {"scale": "xscale", "field": "u"},
+          "y": {"scale": "yscale", "field": "v"},
+          "y2": {"scale": "yscale", "value": 0},
+          "fill": {"value": "steelblue"}
+        },
+        "update": {
+          "interpolate": {"signal": "interpolate"},
+          "fillOpacity": {"value": 1}
+        },
+        "hover": {
+          "fillOpacity": {"value": 0.5}
+        }
+      }
+    }
+  ]
+}
+   /* JSON dump of your chart's spec */
+		var opt = {"renderer": "canvas", "actions": false};  /* Options for the embedding */
+		vegaEmbed("#vis", spec, opt);
+	</script>
+				</section>
+
+	<section>
+		<h2>What is this chart?</h2>
+		<p> Glad you asked. This chart is an area chart. This type of chart uses the filled portion of theg raph to show changes in quantitative values of the data. Using the interaction tool you can decide how you want to interpolate the data(i.e : show the changes linearly, only cardinal values, on a step basis etc...)
+	</section>
+
+	<section>
+		<h3>How do we make this?</h3>
+		<h2><a href="https://vega.github.io/vega/examples/area-chart/">Visit the source code for this chart</a></h2>
+		<pre><code data-trim data-line-numbers=1-2|3-91><script type="text/template">
+							{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "description": "A basic area chart example.",
+  "width": 500,
+  "height": 200,
+  "padding": 5,
+
+  "signals": [
+    {
+      "name": "interpolate",
+      "value": "monotone",
+      "bind": {
+        "input": "select",
+        "options": [
+          "basis",
+          "cardinal",
+          "catmull-rom",
+          "linear",
+          "monotone",
+          "natural",
+          "step",
+          "step-after",
+          "step-before"
+        ]
+      }
+    }
+  ],
+
+  "data": [
+    {
+      "name": "table",
+      "values": [
+        {"u": 1,  "v": 28}, {"u": 2,  "v": 55},
+        {"u": 3,  "v": 43}, {"u": 4,  "v": 91},
+        {"u": 5,  "v": 81}, {"u": 6,  "v": 53},
+        {"u": 7,  "v": 19}, {"u": 8,  "v": 87},
+        {"u": 9,  "v": 52}, {"u": 10, "v": 48},
+        {"u": 11, "v": 24}, {"u": 12, "v": 49},
+        {"u": 13, "v": 87}, {"u": 14, "v": 66},
+        {"u": 15, "v": 17}, {"u": 16, "v": 27},
+        {"u": 17, "v": 68}, {"u": 18, "v": 16},
+        {"u": 19, "v": 49}, {"u": 20, "v": 15}
+      ]
+    }
+  ],
+
+  "scales": [
+    {
+      "name": "xscale",
+      "type": "linear",
+      "range": "width",
+      "zero": false,
+      "domain": {"data": "table", "field": "u"}
     },
     {
-      "orient": "right", "scale": "y", "format": "%",
-      "grid": true, "domain": false, "tickSize": 12,
+      "name": "yscale",
+      "type": "linear",
+      "range": "height",
+      "nice": true,
+      "zero": true,
+      "domain": {"data": "table", "field": "v"}
+    }
+  ],
+
+  "axes": [
+    {"orient": "bottom", "scale": "xscale", "tickCount": 20},
+    {"orient": "left", "scale": "yscale"}
+  ],
+
+  "marks": [
+    {
+      "type": "area",
+      "from": {"data": "table"},
       "encode": {
-        "grid": {"enter": {"stroke": {"value": "#ccc"}}},
-        "ticks": {"enter": {"stroke": {"value": "#ccc"}}}
+        "enter": {
+          "x": {"scale": "xscale", "field": "u"},
+          "y": {"scale": "yscale", "field": "v"},
+          "y2": {"scale": "yscale", "value": 0},
+          "fill": {"value": "steelblue"}
+        },
+        "update": {
+          "interpolate": {"signal": "interpolate"},
+          "fillOpacity": {"value": 1}
+        },
+        "hover": {
+          "fillOpacity": {"value": 0.5}
+        }
       }
+    }
+  ]
+}
+							</script></pre></code>
+						</code></pre>
+	</section>
+				
+</section>
+
+<section>
+	<section>
+		<h3>Visualization #3</h3>
+		<div id="vi1"></div>
+	<script type="text/javascript">
+		var spec = {
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "description": "A choropleth map depicting U.S. unemployment rates by county in 2009.",
+  "width": 960,
+  "height": 500,
+  "autosize": "none",
+
+  "data": [
+    {
+      "name": "unemp",
+      "url": "data/unemployment.tsv",
+      "format": {"type": "tsv", "parse": "auto"}
+    },
+    {
+      "name": "counties",
+      "url": "data/us-10m.json",
+      "format": {"type": "topojson", "feature": "counties"},
+      "transform": [
+        { "type": "lookup", "from": "unemp", "key": "id", "fields": ["id"], "values": ["rate"] },
+        { "type": "filter", "expr": "datum.rate != null" }
+      ]
+    }
+  ],
+
+  "projections": [
+    {
+      "name": "projection",
+      "type": "albersUsa"
+    }
+  ],
+
+  "scales": [
+    {
+      "name": "color",
+      "type": "quantize",
+      "domain": [0, 0.15],
+      "range": {"scheme": "blues", "count": 7}
+    }
+  ],
+
+  "legends": [
+    {
+      "fill": "color",
+      "orient": "bottom-right",
+      "title": "Unemployment",
+      "format": "0.1%"
     }
   ],
 
   "marks": [
     {
-      "type": "group",
-      "from": {
-        "data": "series",
-        "facet": {
-          "name": "facet",
-          "data": "jobs",
-          "groupby": ["job", "sex"]
-        }
-      },
-
-      "marks": [
-        {
-          "type": "area",
-          "from": {"data": "facet"},
-          "encode": {
-            "update": {
-              "x": {"scale": "x", "field": "year"},
-              "y": {"scale": "y", "field": "y0"},
-              "y2": {"scale": "y", "field": "y1"},
-              "fill": {"scale": "color", "field": "sex"},
-              "fillOpacity": {"scale": "alpha", "field": {"parent": "sum"}}
-            },
-            "hover": {
-              "fillOpacity": {"value": 0.2}
-            }
-          }
-        }
-      ]
-    },
-    {
-      "type": "text",
-      "from": {"data": "series"},
-      "interactive": false,
+      "type": "shape",
+      "from": {"data": "counties"},
       "encode": {
-        "update": {
-          "x": {"scale": "x", "field": "argmax.year"},
-          "dx": {"scale": "offset", "field": "argmax.year"},
-          "y": {"signal": "scale('y', 0.5 * (datum.argmax.y0 + datum.argmax.y1))"},
-          "fill": {"value": "#000"},
-          "fillOpacity": {"scale": "opacity", "field": "argmax.perc"},
-          "fontSize": {"scale": "font", "field": "argmax.perc", "offset": 5},
-          "text": {"field": "job"},
-          "align": {"scale": "align", "field": "argmax.year"},
-          "baseline": {"value": "middle"}
-        }
-      }
+        "enter": { "tooltip": {"signal": "format(datum.rate, '0.1%')"}},
+        "update": { "fill": {"scale": "color", "field": "rate"} },
+        "hover": { "fill": {"value": "red"} }
+      },
+      "transform": [
+        { "type": "geoshape", "projection": "projection" }
+      ]
     }
   ]
 };  /* JSON dump of your chart's spec */
 		var opt = {"renderer": "canvas", "actions": false};  /* Options for the embedding */
-		vegaEmbed("#vis", spec, opt);
+		vegaEmbed("#vi1", spec, opt);
 	</script>
-				</section>
-				
 
+	</section>
+</section>
 
 				
 					
