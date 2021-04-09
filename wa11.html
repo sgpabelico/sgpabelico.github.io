@@ -242,185 +242,205 @@
 	<script type="text/javascript">
 		var spec = {
   "$schema": "https://vega.github.io/schema/vega/v5.json",
-  "description": "A population pyramid showing U.S. demographics from 1850 to 2000.",
-  "height": 400,
-  "padding": 5,
+  "description": "A basic pie chart example.",
+  "width": 200,
+  "height": 200,
+  "autosize": "none",
 
   "signals": [
-    { "name": "chartWidth", "value": 300 },
-    { "name": "chartPad", "value": 20 },
-    { "name": "width", "update": "2 * chartWidth + chartPad" },
-    { "name": "year", "value": 2000,
-      "bind": {"input": "range", "min": 1850, "max": 2000, "step": 10} }
+    {
+      "name": "startAngle", "value": 0,
+      "bind": {"input": "range", "min": 0, "max": 6.29, "step": 0.01}
+    },
+    {
+      "name": "endAngle", "value": 6.29,
+      "bind": {"input": "range", "min": 0, "max": 6.29, "step": 0.01}
+    },
+    {
+      "name": "padAngle", "value": 0,
+      "bind": {"input": "range", "min": 0, "max": 0.1}
+    },
+    {
+      "name": "innerRadius", "value": 0,
+      "bind": {"input": "range", "min": 0, "max": 90, "step": 1}
+    },
+    {
+      "name": "cornerRadius", "value": 0,
+      "bind": {"input": "range", "min": 0, "max": 10, "step": 0.5}
+    },
+    {
+      "name": "sort", "value": false,
+      "bind": {"input": "checkbox"}
+    }
   ],
 
   "data": [
     {
-      "name": "population",
-      "url": "https://vega.github.io/data/population.json"
-    },
-    {
-      "name": "popYear",
-      "source": "population",
+      "name": "table",
+      "values": [
+        {"id": 1, "field": 4},
+        {"id": 2, "field": 6},
+        {"id": 3, "field": 10},
+        {"id": 4, "field": 3},
+        {"id": 5, "field": 7},
+        {"id": 6, "field": 8}
+      ],
       "transform": [
-        {"type": "filter", "expr": "datum.year == year"}
-      ]
-    },
-    {
-      "name": "males",
-      "source": "popYear",
-      "transform": [
-        {"type": "filter", "expr": "datum.sex == 1"}
-      ]
-    },
-    {
-      "name": "females",
-      "source": "popYear",
-      "transform": [
-        {"type": "filter", "expr": "datum.sex == 2"}
-      ]
-    },
-    {
-      "name": "ageGroups",
-      "source": "population",
-      "transform": [
-        { "type": "aggregate", "groupby": ["age"] }
+        {
+          "type": "pie",
+          "field": "field",
+          "startAngle": {"signal": "startAngle"},
+          "endAngle": {"signal": "endAngle"},
+          "sort": {"signal": "sort"}
+        }
       ]
     }
   ],
 
   "scales": [
     {
-      "name": "y",
-      "type": "band",
-      "range": [{"signal": "height"}, 0],
-      "round": true,
-      "domain": {"data": "ageGroups", "field": "age"}
-    },
-    {
-      "name": "c",
+      "name": "color",
       "type": "ordinal",
-      "domain": [1, 2],
-      "range": ["#d5855a", "#6c4e97"]
+      "domain": {"data": "table", "field": "id"},
+      "range": {"scheme": "category20"}
     }
   ],
 
   "marks": [
     {
-      "type": "text",
-      "interactive": false,
-      "from": {"data": "ageGroups"},
+      "type": "arc",
+      "from": {"data": "table"},
       "encode": {
         "enter": {
-          "x": {"signal": "chartWidth + chartPad / 2"},
-          "y": {"scale": "y", "field": "age", "band": 0.5},
-          "text": {"field": "age"},
-          "baseline": {"value": "middle"},
-          "align": {"value": "center"},
-          "fill": {"value": "#000"}
+          "fill": {"scale": "color", "field": "id"},
+          "x": {"signal": "width / 2"},
+          "y": {"signal": "height / 2"}
+        },
+        "update": {
+          "startAngle": {"field": "startAngle"},
+          "endAngle": {"field": "endAngle"},
+          "padAngle": {"signal": "padAngle"},
+          "innerRadius": {"signal": "innerRadius"},
+          "outerRadius": {"signal": "width / 2"},
+          "cornerRadius": {"signal": "cornerRadius"}
         }
       }
-    },
-    {
-      "type": "group",
-
-      "encode": {
-        "update": {
-          "x": {"value": 0},
-          "height": {"signal": "height"}
-        }
-      },
-
-      "scales": [
-        {
-          "name": "x",
-          "type": "linear",
-          "range": [{"signal": "chartWidth"}, 0],
-          "nice": true, "zero": true,
-          "domain": {"data": "population", "field": "people"}
-        }
-      ],
-
-      "axes": [
-        {"orient": "bottom", "scale": "x", "format": "s", "title": "Females"}
-      ],
-
-      "marks": [
-        {
-          "type": "rect",
-          "from": {"data": "females"},
-          "encode": {
-            "enter": {
-              "x": {"scale": "x", "field": "people"},
-              "x2": {"scale": "x", "value": 0},
-              "y": {"scale": "y", "field": "age"},
-              "height": {"scale": "y", "band": 1, "offset": -1},
-              "fillOpacity": {"value": 0.6},
-              "fill": {"scale": "c", "field": "sex"}
-            }
-          }
-        }
-      ]
-    },
-    {
-      "type": "group",
-
-      "encode": {
-        "update": {
-          "x": {"signal": "chartWidth + chartPad"},
-          "height": {"signal": "height"}
-        }
-      },
-
-      "scales": [
-        {
-          "name": "x",
-          "type": "linear",
-          "range": [0, {"signal": "chartWidth"}],
-          "nice": true, "zero": true,
-          "domain": {"data": "population", "field": "people"}
-        }
-      ],
-
-      "axes": [
-        {"orient": "bottom", "scale": "x", "format": "s", "title": "Males"}
-      ],
-
-      "marks": [
-        {
-          "type": "rect",
-          "from": {"data": "males"},
-          "encode": {
-            "enter": {
-              "x": {"scale": "x", "field": "people"},
-              "x2": {"scale": "x", "value": 0},
-              "y": {"scale": "y", "field": "age"},
-              "height": {"scale": "y", "band": 1, "offset": -1},
-              "fillOpacity": {"value": 0.6},
-              "fill": {"scale": "c", "field": "sex"}
-            }
-          }
-        }
-      ]
     }
   ]
-}  /* JSON dump of your chart's spec */
+};  /* JSON dump of your chart's spec */
 		var opt = {"renderer": "canvas", "actions": false};  /* Options for the embedding */
 		vegaEmbed("#vi1", spec, opt);
 	</script>
 
 	</section>
+
+	<section>
+	<h2>What is this chart?</h2>
+	<p> Again, glad you asked. This is your standard issue pie chart. However, through vega we get to customize what we are looking at with the help of a few different variable tools like startAngle, endAngle etc...This chart is great to be able to display multiple categories of data across some numerical value. 
+	</section>
+
+	<section>
+		<h3> How do we make this?</h3>
+		<h2><a href="https://vega.github.io/vega/examples/pie-chart/">Visit the source code for this chart</a></h2>
+		<pre><code data-trim data-line-numbers=1-2|3-91><script type="text/template">
+			{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "description": "A basic pie chart example.",
+  "width": 200,
+  "height": 200,
+  "autosize": "none",
+
+  "signals": [
+    {
+      "name": "startAngle", "value": 0,
+      "bind": {"input": "range", "min": 0, "max": 6.29, "step": 0.01}
+    },
+    {
+      "name": "endAngle", "value": 6.29,
+      "bind": {"input": "range", "min": 0, "max": 6.29, "step": 0.01}
+    },
+    {
+      "name": "padAngle", "value": 0,
+      "bind": {"input": "range", "min": 0, "max": 0.1}
+    },
+    {
+      "name": "innerRadius", "value": 0,
+      "bind": {"input": "range", "min": 0, "max": 90, "step": 1}
+    },
+    {
+      "name": "cornerRadius", "value": 0,
+      "bind": {"input": "range", "min": 0, "max": 10, "step": 0.5}
+    },
+    {
+      "name": "sort", "value": false,
+      "bind": {"input": "checkbox"}
+    }
+  ],
+
+  "data": [
+    {
+      "name": "table",
+      "values": [
+        {"id": 1, "field": 4},
+        {"id": 2, "field": 6},
+        {"id": 3, "field": 10},
+        {"id": 4, "field": 3},
+        {"id": 5, "field": 7},
+        {"id": 6, "field": 8}
+      ],
+      "transform": [
+        {
+          "type": "pie",
+          "field": "field",
+          "startAngle": {"signal": "startAngle"},
+          "endAngle": {"signal": "endAngle"},
+          "sort": {"signal": "sort"}
+        }
+      ]
+    }
+  ],
+
+  "scales": [
+    {
+      "name": "color",
+      "type": "ordinal",
+      "domain": {"data": "table", "field": "id"},
+      "range": {"scheme": "category20"}
+    }
+  ],
+
+  "marks": [
+    {
+      "type": "arc",
+      "from": {"data": "table"},
+      "encode": {
+        "enter": {
+          "fill": {"scale": "color", "field": "id"},
+          "x": {"signal": "width / 2"},
+          "y": {"signal": "height / 2"}
+        },
+        "update": {
+          "startAngle": {"field": "startAngle"},
+          "endAngle": {"field": "endAngle"},
+          "padAngle": {"signal": "padAngle"},
+          "innerRadius": {"signal": "innerRadius"},
+          "outerRadius": {"signal": "width / 2"},
+          "cornerRadius": {"signal": "cornerRadius"}
+        }
+      }
+    }
+  ]
+}
+							
+							</script></pre></code>
+						</code></pre>
+
+	</section>
 </section>
 
-				
-					
-
-					
-
-				
-
-					
-					
+	<section>
+	<h2>Pretty cool, right?</h2>
+	</section>			
 
 			</div>
 		</div>
