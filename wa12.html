@@ -23,15 +23,20 @@
 	<body>
 			<div class="reveal">
 			<div class="slides">
-				<section>
-					<h3>Weekly Assignment 12 </h3>
-					<p>Sydney Pabelico</p>
-				</section>
+				<div class="slides">
+					<section>
+						<h3>Weekly Assignment 12 </h3>
+						<p>Sydney Pabelico</p>
+					</section>
 
-				<section>
-						<h2>Marks: Point/Circle</h2>
-						<p>Points can be used for scatter, bubble, spatial plots</p>
-						<p>This is <code><a href="https://github.com/vega/vega-datasets/blob/master/data/sp500-2000.csv" target="_blank" rel="noopener noreferrer">sp500-2000.csv</a></code> dataset:</p>
+					<section>
+						<section>
+						<h2>1st Visualizaton</h2>
+						<p>This is a chart showing a chart with production budget against how much the movie produced in the US (Gross). The colors represent the year the movie was released. </p>
+						<p>This is the <code><a href="https://https://github.com/vega/vega-datasets/blob/master/data/movies.json" target="_blank" rel="noopener noreferrer">movies.json</a></code> dataset:</p>
+						</section>
+					<section>
+						<h3>Movies Dataset Visualizaton</h3>
 						<div id="vis-point"></div>
 						<script type="text/javascript">
 						var spec = {
@@ -58,7 +63,7 @@
 									"timeUnit": "year",
 									"type": "ordinal",
 									"scale": {
-										"scheme": "spectral"
+										"scheme": "rainbow"
 									}
 								}
 							}
@@ -67,6 +72,170 @@
 						vegaEmbed("#vis-point", spec, opt);
 						</script>
 					</section>
-	</body>
+					<section>
+						<h3>How did we do this?</h3>
+						<p>The code to modify the color scheme of the chart is actually fairly simple. You can visit different color schemes<a href="https://vega.github.io/vega/docs/schemes/"> here.</a></p>
+						<pre><code data-trim class='js' data-line-numbers=3-5|5-35|7-17|18-22|23-33>
+							var spec = {
+							"width": 400,
+							"height": 300,
+							"data": {
+								"url": "https://vega.github.io/vega-datasets/data/movies.json"
+							},
+							"mark": {
+								"type": "circle",
+								"size": 10,
+							},
+							"encoding": {
+								"x": {
+									"field": "US Gross",
+									"type": "quantitative"
+								},
+								"y": {
+									"field": "Production Budget",
+									"type": "quantitative"
+								},
+								"color": {
+									"field": "Release Date",
+									"timeUnit": "year",
+									"type": "ordinal",
+									"scale": {
+										"scheme": "rainbow"
+									}
+								}
+							}
+						</code></pre>
+
+					</section>
+					<section>
+						<p>By modifying the "scheme" field to one of the other color schemes, you can customize the visualization to whatever aesthetic makes sense!</p>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>2nd Visualization</h2>
+						<p>The first chart shows weathers (specifically minimum temperatures) generally throughout the country. The second chart shows temperature minimums in just Seattle. You can find both sources of data<a href="https://github.com/vega/vega-datasets/blob/master/data/weather.csv"> Here</a> and <a href="https://github.com/vega/vega-datasets/blob/master/data/seattle-weather.csv">Here.</a></p>
+					</section>
+
+					<section>
+
+						<div id="vis-hconcat"></div>
+						<script type="text/javascript">
+						var spec = {
+							"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+							"width": 300,
+							"height": 200,
+							"hconcat":[{
+								"data": {
+									"url": "https://vega.github.io/vega-datasets/data/weather.csv"
+								},
+								"mark": "area",
+								"title": "Weather",
+								"encoding":{
+									"x":{
+										"field":"date",
+										"type":"temporal"
+									},
+									"y":{
+										"field":"temp_min",
+										"type":"quantitative"
+									},
+									"color": {"value":"red"}
+								}
+							},{
+								"data": {
+									"url": "https://vega.github.io/vega-datasets/data/seattle-weather.csv"
+								},
+								"mark": "area",
+								"title": "Seattle Weather",
+								"encoding":{
+									"x":{
+										"field":"date",
+										"type":"temporal"
+									},
+									"y":{
+										"field":"temp_min",
+										"type":"quantitative"
+									},
+									"color": {"value":"green"}
+								}
+							}]
+						};
+						var opt = {"renderer": "canvas", "actions": false};
+						vegaEmbed("#vis-hconcat", spec, opt);
+						</script>
+					</section>
+					<section>
+						<h3>How did we do this one?</h3>
+						<p>The code to modify the concat two visualizations together can be found below and the documentation is linked <a href="https://vega.github.io/vega-lite/docs/concat.html">here.</a></p>
+						<pre><code data-trim class='js' data-line-numbers=3-5|5-35|7-17|18-22|23-33>
+							var spec = {
+							"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+							"width": 300,
+							"height": 200,
+							"hconcat":[{
+								"data": {
+									"url": "https://vega.github.io/vega-datasets/data/weather.csv"
+								},
+								"mark": "area",
+								"title": "Weather",
+								"encoding":{
+									"x":{
+										"field":"date",
+										"type":"temporal"
+									},
+									"y":{
+										"field":"temp_min",
+										"type":"quantitative"
+									},
+									"color": {"value":"red"}
+								}
+							},{
+								"data": {
+									"url": "https://vega.github.io/vega-datasets/data/seattle-weather.csv"
+								},
+								"mark": "area",
+								"title": "Seattle Weather",
+								"encoding":{
+									"x":{
+										"field":"date",
+										"type":"temporal"
+									},
+									"y":{
+										"field":"temp_min",
+										"type":"quantitative"
+									},
+									"color": {"value":"green"}
+								}
+							}]
+						};
+						</code></pre>
+
+					</section>
+					<section>
+						The important part here is the hconcat that connects the two specs for the indivdual graphs. You can create the individual graphs and then use hconcat to connect the two horizontally. 
+					</section>
+
+					</section>
+					<section>
+						<h3>Thanks for learning with me!</h3>
+					</section>
+		</div>
+	</div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/reveal.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/plugin/highlight/highlight.min.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				slideNumber: 'h/v',
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealHighlight ]
+			});
+		</script>
+</body>
 
 	</html>
