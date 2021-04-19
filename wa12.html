@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Weekly Assignment 12</title>
+
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/reset.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/reveal.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/theme/moon.min.css" id="theme">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/plugin/highlight/monokai.min.css" id="highlight-theme">
+
+		<!-- Loading Vega-->
+		<script src="https://cdn.jsdelivr.net/npm/vega@5.19.1"></script>
+		<script src="https://cdn.jsdelivr.net/npm/vega-lite@5.0.0"></script>
+		<script src="https://cdn.jsdelivr.net/npm/vega-embed@6.15.1"></script>
+
+	</head>
+
+	<body>
+			<div class="reveal">
+			<div class="slides">
+				<section>
+					<h3>Weekly Assignment 12 </h3>
+					<p>Sydney Pabelico</p>
+				</section>
+
+				<section>
+						<h2>Marks: Point/Circle</h2>
+						<p>Points can be used for scatter, bubble, spatial plots</p>
+						<p>This is <code><a href="https://github.com/vega/vega-datasets/blob/master/data/sp500-2000.csv" target="_blank" rel="noopener noreferrer">sp500-2000.csv</a></code> dataset:</p>
+						<div id="vis-point"></div>
+						<script type="text/javascript">
+						var spec = {
+							"width": 400,
+							"height": 300,
+							"data": {
+								"url": "https://vega.github.io/vega-datasets/data/movies.json"
+							},
+							"mark": {
+								"type": "circle",
+								"size": 10,
+							},
+							"encoding": {
+								"x": {
+									"field": "US Gross",
+									"type": "quantitative"
+								},
+								"y": {
+									"field": "Production Budget",
+									"type": "quantitative"
+								},
+								"color": {
+									"field": "Release Date",
+									"timeUnit": "year",
+									"type": "ordinal",
+									"scale": {
+										"scheme": "spectral"
+									}
+								}
+							}
+						};
+						var opt = {"renderer": "canvas", "actions": false};
+						vegaEmbed("#vis-point", spec, opt);
+						</script>
+					</section>
+	</body>
+
+	</html>
